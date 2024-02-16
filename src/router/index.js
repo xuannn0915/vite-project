@@ -3,27 +3,43 @@ import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
+  linkActiveClass: 'active',
   routes: [
     {
-      path: '/',
-      // name: 'home',
-      component: HomeView
+      path:'/',
+      component:()=>import('../views/FrontView.vue'),
+      children:[
+        {
+          path:'home',
+          component: HomeView
+        },
+        {
+          path:'about',
+          component: () => import('../views/AboutView.vue')
+        },
+        {
+          path:'test',
+          component: () => import('../views/TestView.vue')
+        },
+        {
+          path:'products',
+          component:()=>import('../views/ProductsView.vue')
+        },
+        {
+          path:'products/:productId',
+          component:()=>import('../views/ProductView.vue')
+        }
+      ]
     },
     {
-      path: '/about',
-      // name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/test',
-      // name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TestView.vue')
+      path:'/backstage',
+      component:()=>import ('../views/backstage/BackView.vue'),
+      children:[
+        {
+          path:'products',
+          component:()=>import ('../views/backstage/BackProduct.vue'),
+        }
+      ]
     }
   ]
 })
